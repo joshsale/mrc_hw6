@@ -1,0 +1,14 @@
+try
+    rosinit
+catch
+end
+
+message = set_initialpose(0,0,-pi);
+
+[client,goalMsg] = rosactionclient('/move_base');
+waitForServer(client)
+
+goalMsg.TargetPose.Pose.Position.X = x;
+goalMsg.TargetPose.Pose.Position.Y = y;
+client.FeedbackFcn = [];
+[resultMsg,~,~] = sendGoalAndWait(client,goalMsg)
